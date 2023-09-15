@@ -89,11 +89,12 @@ export default function Login({ className, ...props }: UserAuthFormProps) {
           showRegister ? "hidden" : "flex"
         } lg:w-1/2 px-5 flex flex-col items-center justify-center`}
       >
+        <h1 className="flex text-3xl font-extrabold lg:hidden">Cash Admin</h1>
         <div className="py-10 flex flex-col items-center justify-center">
           <span className="pb-10 bg-black p-10  rounded-full">
             <ExcludeSquare size={60} weight="fill" />
           </span>
-          <h1 className="text-3xl pt-5 font-semibold">Seja Bem-vindo!</h1>
+          <h1 className="text-2xl pt-5 font-semibold">Seja Bem-vindo!</h1>
         </div>
         <div>
           <form
@@ -136,6 +137,12 @@ export default function Login({ className, ...props }: UserAuthFormProps) {
               Entrar
             </Button>
           </form>
+          <Button
+            className="w-full mt-5 bg-red-600 hover:bg-red-600/30 text-white"
+            onClick={() => signIn("google")}
+          >
+            Entrar com o Google
+          </Button>
           <Button
             className="w-full mt-5 bg-green-600 hover:bg-green-600/30 text-white"
             onClick={handleShowSection}

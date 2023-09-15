@@ -110,7 +110,7 @@ export default function Register({ handleShowSection }: RegisterProps) {
     <main className="flex flex-col items-center justify-center">
       <div className="flex flex-col items-center">
         <span
-          className="flex items-center bg-green-600 hover:bg-green-600/30 px-3 py-1 text-md rounded-md relative lg:bottom-16 lg:left-60 bottom-16 left-32 cursor-pointer"
+          className="flex items-center font-bold bg-green-600 hover:bg-green-600/30 px-3 py-1 text-md rounded-md relative lg:bottom-16 lg:left-60 bottom-16 left-32 cursor-pointer"
           onClick={handleShowSection}
         >
           <ArrowLeft size={20} />
