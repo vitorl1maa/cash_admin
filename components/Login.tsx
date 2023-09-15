@@ -5,8 +5,10 @@ import React, { useState } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import Register from "./Register";
-
 import { signIn } from "next-auth/react";
+import { useToast } from "./ui/use-toast";
+import { ToastAction } from "./ui/toast";
+import { useRouter } from "next/navigation";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -16,6 +18,8 @@ interface IUser {
 }
 
 export default function Login({ className, ...props }: UserAuthFormProps) {
+  const { toast } = useToast();
+  const router = useRouter();
   const [showRegister, setShowRegister] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [data, setData] = useState<IUser>({
@@ -35,6 +39,22 @@ export default function Login({ className, ...props }: UserAuthFormProps) {
       ...data,
       redirect: false,
     });
+
+    if (res?.error) {
+      toast({
+        title: "😖 Ops... Erro ao fazer login",
+        description: res.error,
+        variant: "destructive",
+        action: (
+          <ToastAction altText={"Tente Novamente!"}>
+            Tente Novamente!
+          </ToastAction>
+        ),
+      });
+    } else {
+      console.log("Erro:", res?.error);
+      router.push("/dashboard");
+    }
 
     // setTimeout(() => {
     //   setIsLoading(false);
@@ -70,10 +90,10 @@ export default function Login({ className, ...props }: UserAuthFormProps) {
         } lg:w-1/2 px-5 flex flex-col items-center justify-center`}
       >
         <div className="py-10 flex flex-col items-center justify-center">
-          <span className="pb-10">
+          <span className="pb-10 bg-black p-10  rounded-full">
             <ExcludeSquare size={60} weight="fill" />
           </span>
-          <h1 className="text-3xl font-semibold">Seja Bem-vindo!</h1>
+          <h1 className="text-3xl pt-5 font-semibold">Seja Bem-vindo!</h1>
         </div>
         <div>
           <form

@@ -31,12 +31,17 @@ model Account {
 }
 
 model User {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
-  image         String?
-  accounts      Account[]
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  name           String?
+  lastName       String?
+  email          String?   @unique
+  emailVerified  DateTime?
+  profession     String?
+  hashedPassword String?
+  avatar         String?
+  createdAt      DateTime  @default(now())
+  updateAt       DateTime  @updatedAt
+  accounts       Account[]
 
   @@map("users")
 }

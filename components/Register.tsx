@@ -5,15 +5,16 @@ import { Input } from "./ui/input";
 import { AvatarImage, Avatar, AvatarFallback } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { ArrowLeft, Spinner } from "@phosphor-icons/react";
-
-// interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+import { useToast } from "./ui/use-toast";
+import { ToastAction } from "./ui/toast";
+import { useRouter } from "next/navigation";
 
 interface RegisterProps {
   handleShowSection: () => void;
 }
 
 interface UserRegister {
-  avatar: File | Blob | null;
+  avatar?: File | Blob | null;
   name: string;
   lastName: string;
   email: string;
@@ -22,6 +23,8 @@ interface UserRegister {
 }
 
 export default function Register({ handleShowSection }: RegisterProps) {
+  const { toast } = useToast();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const avatarRef = useRef<HTMLInputElement | null>(null);
   const [avatarURL, setAvatarURL] = useState<string>("");
@@ -37,6 +40,30 @@ export default function Register({ handleShowSection }: RegisterProps) {
   async function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault;
     setIsLoading(true);
+
+    const req = await fetch("/api/users", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    const res = await req.json();
+
+    console.log("USER REGISTER FORM", res);
+
+    if (!req.ok) {
+      toast({
+        title: "😖 Ops!",
+        description: res.error,
+        variant: "destructive",
+        action: (
+          <ToastAction altText="Tente Novamente!">Tente Novamente!</ToastAction>
+        ),
+      });
+    } else {
+      console.log(res);
+      handleShowSection();
+    }
 
     // setTimeout(() => {
     //   setIsLoading(false);
