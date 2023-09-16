@@ -138,7 +138,10 @@ export default function Login({ className, ...props }: UserAuthFormProps) {
             </Button>
           </form>
           <div>
-            <Button className="w-full mt-5" onClick={() => signIn("google")}>
+            <Button
+              className="w-full mt-5"
+              onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+            >
               <img src="/google.svg" alt="" className="pr-3 w-9" />
               Entrar com o Google
             </Button>
