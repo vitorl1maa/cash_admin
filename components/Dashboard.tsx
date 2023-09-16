@@ -16,8 +16,8 @@ export default function Dashboard() {
         </main>
       ) : (
         <section className="flex flex-col items-center justify-center container py-8  h-screen">
-          <div className="w-80">
-            <p className="text-red-500 text-center">
+          <div className="w-80 ">
+            <p className="text-red-500 text-center bg-red-600/30 px-5 py-3 rounded-lg">
               Desculpe, esta página é restrita a usuários autenticados. Por
               favor, faça o login para acessar este conteúdo.
             </p>

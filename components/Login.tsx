@@ -137,12 +137,12 @@ export default function Login({ className, ...props }: UserAuthFormProps) {
               Entrar
             </Button>
           </form>
-          <Button
-            className="w-full mt-5 bg-red-600 hover:bg-red-600/30 text-white"
-            onClick={() => signIn("google")}
-          >
-            Entrar com o Google
-          </Button>
+          <div>
+            <Button className="w-full mt-5" onClick={() => signIn("google")}>
+              <img src="/google.svg" alt="" className="pr-3 w-9" />
+              Entrar com o Google
+            </Button>
+          </div>
           <Button
             className="w-full mt-5 bg-green-600 hover:bg-green-600/30 text-white"
             onClick={handleShowSection}
