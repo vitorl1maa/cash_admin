@@ -8,7 +8,7 @@ import Link from "next/link";
 export default function Dashboard() {
   const { data: session, status } = useSession();
 
-  console.log(session);
+  console.log(status);
 
   return (
     <>
