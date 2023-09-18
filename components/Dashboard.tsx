@@ -6,7 +6,9 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 
 export default function Dashboard() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+
+  console.log(session);
 
   return (
     <>
