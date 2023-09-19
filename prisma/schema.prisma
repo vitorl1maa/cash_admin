@@ -52,6 +52,8 @@ model User {
   accounts       Account[]
   session        Session[]
   ValuesRegister ValuesRegister[]
+  DepositType    DepositType?     @relation(fields: [depositTypeId], references: [id])
+  depositTypeId  String?          @db.ObjectId
 
   @@map("users")
 }
@@ -68,4 +70,10 @@ model ValuesRegister {
   user User @relation(fields: [userId], references: [id])
 
   @@map("valuesRegisters")
+}
+
+model DepositType {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  name  String @unique
+  users User[]
 }

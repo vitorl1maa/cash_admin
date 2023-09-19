@@ -4,24 +4,55 @@ import { Coins, HandCoins, PiggyBank } from "@phosphor-icons/react";
 import React from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function FluxInputs() {
   return (
     <article className="py-8 pl-8 flex flex-col w-3/5 h-screen border-r">
-      <form className="flex gap-3 py-10">
-        <div className="flex flex-col gap-2">
-          <label htmlFor="" className="font-extrabold">
-            Valor:
-          </label>
-          <Input placeholder="valor" className="w-52" />
+      <form className="gap-3 py-10">
+        <div className="flex items-center gap-5 w-full">
+          <div>
+            <label htmlFor="" className="font-extrabold">
+              Valor:
+            </label>
+            <Input placeholder="valor" className="w-52 my-3" />
+          </div>
+          <div>
+            <label htmlFor="" className="font-extrabold">
+              Descrição:
+            </label>
+            <Input placeholder="Descrição" className="w-52 my-3" />
+          </div>
+          <div className="">
+            <label htmlFor="" className="font-extrabold">
+              Selecione o tipo:
+            </label>
+            <Select>
+              <SelectTrigger className="w-[180px] my-3">
+                <SelectValue placeholder="Selecione" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Selecione</SelectLabel>
+                  <SelectItem value="apple">Apple</SelectItem>
+                  <SelectItem value="banana">Banana</SelectItem>
+                  <SelectItem value="blueberry">Blueberry</SelectItem>
+                  <SelectItem value="grapes">Grapes</SelectItem>
+                  <SelectItem value="pineapple">Pineapple</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="" className="font-extrabold">
-            Descrição:
-          </label>
-          <Input placeholder="Descrição" className="w-52" />
-        </div>
-        <div className="flex items-end gap-2">
+        <div className="flex items-end gap-2 py-5">
           <Button className="w-32 hover:translate-y-1 transition-all">
             Retirar
           </Button>
