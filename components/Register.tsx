@@ -4,7 +4,7 @@ import React, { useState, useRef } from "react";
 import { Input } from "./ui/input";
 import { AvatarImage, Avatar, AvatarFallback } from "./ui/avatar";
 import { Button } from "./ui/button";
-import { ArrowLeft, Spinner } from "@phosphor-icons/react";
+import { ArrowLeft, ExcludeSquare, Spinner } from "@phosphor-icons/react";
 import { useToast } from "./ui/use-toast";
 import { ToastAction } from "./ui/toast";
 import { useRouter } from "next/navigation";
@@ -80,23 +80,23 @@ export default function Register({ handleShowSection }: RegisterProps) {
     setIsLoading(false);
   }
 
-  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files && e.target.files[0];
-    if (selectedFile) {
-      setAvatarURL(URL.createObjectURL(selectedFile)); // Define a URL do arquivo para visualização
-      setData((prev) => ({
-        ...prev,
-        avatar: selectedFile, // Atualiza o campo 'avatar' no estado com o arquivo selecionado
-      }));
-    }
-  };
+  // const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const selectedFile = e.target.files && e.target.files[0];
+  //   if (selectedFile) {
+  //     setAvatarURL(URL.createObjectURL(selectedFile)); // Define a URL do arquivo para visualização
+  //     setData((prev) => ({
+  //       ...prev,
+  //       avatar: selectedFile, // Atualiza o campo 'avatar' no estado com o arquivo selecionado
+  //     }));
+  //   }
+  // };
 
-  const handleAddPhotoClick = () => {
-    // Aciona o clique no input de arquivo ao clicar no botão "Adicionar foto"
-    if (avatarRef.current) {
-      avatarRef.current.click();
-    }
-  };
+  // const handleAddPhotoClick = () => {
+  //   // Aciona o clique no input de arquivo ao clicar no botão "Adicionar foto"
+  //   if (avatarRef.current) {
+  //     avatarRef.current.click();
+  //   }
+  // };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData((prev) => {
@@ -110,35 +110,33 @@ export default function Register({ handleShowSection }: RegisterProps) {
     <main className="flex flex-col items-center justify-center">
       <div className="flex flex-col items-center">
         <span
-          className="flex items-center font-bold bg-green-600 hover:bg-green-600/30 px-3 py-1 text-md rounded-md relative lg:bottom-16 lg:left-60 bottom-16 left-32 cursor-pointer"
+          className="flex items-center font-bold bg-green-600 hover:bg-green-600/30 px-5 py-2 text-md rounded-md relative lg:bottom-0 lg:left-60 bottom-10 left-32 cursor-pointer hover:translate-y-1 transition-all"
           onClick={handleShowSection}
         >
           <ArrowLeft size={20} />
           Login
         </span>
-        <Avatar className="w-32 h-32">
+        <div className="py-10 flex flex-col items-center justify-center">
+          <span className="pb-10 bg-black p-10  rounded-full">
+            <ExcludeSquare size={60} weight="fill" />
+          </span>
+          <h1 className="text-2xl pt-5 font-semibold">Criar conta</h1>
+        </div>
+        {/* <Avatar className="w-32 h-32">
           {avatarURL ? (
             <AvatarImage src={avatarURL} />
           ) : (
             <AvatarFallback>Perfil</AvatarFallback>
           )}
-        </Avatar>
-        <button
+        </Avatar> */}
+        {/* <button
           className="bg-zinc-900 text-xs px-3 py-1 rounded-full mt-3 border-neutral-800 bg-zinc-800/30"
           onClick={handleAddPhotoClick}
         >
           Adicionar foto
-        </button>
+        </button> */}
       </div>
       <form className="w-full" onSubmit={handleSubmit}>
-        <Input
-          id="avatar"
-          type="file"
-          className="hidden"
-          name="avatar"
-          ref={avatarRef}
-          onChange={handleAvatarChange}
-        />
         <div className="flex gap-5 my-5">
           <Input
             id="name"
@@ -196,14 +194,14 @@ export default function Register({ handleShowSection }: RegisterProps) {
           />
         </div>
         <Button
-          className="w-full mt-5"
+          className="w-full mt-5 hover:translate-y-1 transition-all"
           disabled={isLoading}
           onClick={handleSubmit}
         >
           {isLoading && (
             <Spinner className="mr-2 h-4 w-4 animate-spin" size={15} />
           )}
-          Criar conta
+          Criar
         </Button>
       </form>
     </main>

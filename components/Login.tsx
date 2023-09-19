@@ -94,7 +94,7 @@ export default function Login({ className, ...props }: UserAuthFormProps) {
           <span className="pb-10 bg-black p-10  rounded-full">
             <ExcludeSquare size={60} weight="fill" />
           </span>
-          <h1 className="text-2xl pt-5 font-semibold">Seja Bem-vindo!</h1>
+          <h1 className="text-2xl pt-5 font-semibold">Seja Bem-vindo(a)!</h1>
         </div>
         <div>
           <form
@@ -127,7 +127,7 @@ export default function Login({ className, ...props }: UserAuthFormProps) {
               onChange={handleChange}
             />
             <Button
-              className="w-full mt-5"
+              className="w-full mt-5 hover:translate-y-1 transition-all"
               disabled={isLoading}
               onClick={handleSubmit}
             >
@@ -139,15 +139,15 @@ export default function Login({ className, ...props }: UserAuthFormProps) {
           </form>
           <div>
             <Button
-              className="w-full mt-5"
-              onClick={() => signIn("google", {callbackUrl: '/dashboard'})}
+              className="w-full mt-5 hover:translate-y-1 transition-all"
+              onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
             >
               <img src="/google.svg" alt="" className="pr-3 w-9" />
               Entrar com o Google
             </Button>
           </div>
           <Button
-            className="w-full mt-5 bg-green-600 hover:bg-green-600/30 text-white"
+            className="w-full mt-5 bg-green-600 hover:bg-green-600/30 hover:translate-y-1 transition-all text-white"
             onClick={handleShowSection}
           >
             Criar conta
