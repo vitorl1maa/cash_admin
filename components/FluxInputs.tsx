@@ -1,7 +1,6 @@
 "use client";
 
 import { Coins, HandCoins, PiggyBank } from "@phosphor-icons/react";
-import React from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import {
@@ -13,40 +12,125 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useEffect, useState } from "react";
+import { formatDate, formatDateTime } from "@/utils/formatDate";
+
+interface DepositTypeProp {
+  id: string;
+  name: string;
+}
+
+interface FormValue {
+  value: string | number;
+  description: string;
+}
 
 export default function FluxInputs() {
+  const [depositTypes, setDepositTypes] = useState<DepositTypeProp[]>([]);
+  const [currentDate, setCurrentDate] = useState<Date>(new Date());
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [selectedDepositType, setSelectedDepositType] = useState<string | null>(
+    null
+  );
+  const [inputValue, setInputValue] = useState<FormValue>({
+    value: "",
+    description: "",
+  });
+
+  useEffect(() => {
+    async function getDepositTypes() {
+      try {
+        const res = await fetch("/api/depositTypes", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!res.ok) {
+          throw new Error("Erro ao buscar tipos de depósito.");
+        }
+
+        const data = await res.json();
+        setDepositTypes(data);
+      } catch (error) {
+        console.error("Erro ao buscar tipos de depósito:", error);
+        throw error;
+      }
+    }
+    getDepositTypes();
+  }, []);
+
+  const handleTakeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
+  };
+
+  const handleDepositTypeValue = (selectedValue: string) => {
+    setSelectedDepositType(selectedValue);
+  };
+  console.log(inputValue);
+  console.log(selectedDepositType);
+
+  const handleSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    const dataToSubmit = {
+      value: inputValue.value,
+      description: inputValue.description,
+      depositType: selectedDepositType,
+    };
+
+    console.log(dataToSubmit);
+  };
+
   return (
     <article className="py-8 pl-8 flex flex-col w-3/5 h-screen border-r">
-      <form className="gap-3 py-10">
+      <p className="font-extrabold">🗓 {formatDate(currentDate)}</p>
+      <form className="gap-3 pt-28" onSubmit={handleSubmit}>
         <div className="flex items-center gap-5 w-full">
           <div>
             <label htmlFor="" className="font-extrabold">
               Valor:
             </label>
-            <Input placeholder="valor" className="w-52 my-3" />
+            <Input
+              name="value"
+              placeholder="valor"
+              value={inputValue.value}
+              onChange={handleTakeValue}
+              className="w-52 my-3"
+            />
           </div>
           <div>
             <label htmlFor="" className="font-extrabold">
               Descrição:
             </label>
-            <Input placeholder="Descrição" className="w-52 my-3" />
+            <Input
+              name="description"
+              placeholder="Descrição"
+              value={inputValue.description}
+              onChange={handleTakeValue}
+              className="w-52 my-3"
+            />
           </div>
           <div className="">
             <label htmlFor="" className="font-extrabold">
               Selecione o tipo:
             </label>
-            <Select>
+            <Select onValueChange={handleDepositTypeValue}>
               <SelectTrigger className="w-[180px] my-3">
                 <SelectValue placeholder="Selecione" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Selecione</SelectLabel>
-                  <SelectItem value="apple">Apple</SelectItem>
-                  <SelectItem value="banana">Banana</SelectItem>
-                  <SelectItem value="blueberry">Blueberry</SelectItem>
-                  <SelectItem value="grapes">Grapes</SelectItem>
-                  <SelectItem value="pineapple">Pineapple</SelectItem>
+                  {depositTypes.map((depositType) => (
+                    <SelectItem value={depositType.name} key={depositType.id}>
+                      {depositType.name}
+                    </SelectItem>
+                  ))}
                 </SelectGroup>
               </SelectContent>
             </Select>

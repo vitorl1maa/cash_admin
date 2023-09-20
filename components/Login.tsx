@@ -32,7 +32,7 @@ export default function Login({ className, ...props }: UserAuthFormProps) {
   };
 
   async function handleSubmit(e: React.SyntheticEvent) {
-    e.preventDefault;
+    e.preventDefault();
     setIsLoading(true);
 
     const res = await signIn<"credentials">("credentials", {
@@ -129,7 +129,6 @@ export default function Login({ className, ...props }: UserAuthFormProps) {
             <Button
               className="w-full mt-5 hover:translate-y-1 transition-all"
               disabled={isLoading}
-              onClick={handleSubmit}
             >
               {isLoading && (
                 <Spinner className="mr-2 h-4 w-4 animate-spin" size={15} />

@@ -36,32 +36,11 @@ export async function POST() {
 export async function GET() {
   try {
     const depositTypes = await prisma.depositType.findMany();
-    return NextResponse.json(depositTypes);
+    return NextResponse.json(depositTypes, {status:200});
   } catch (error) {
     console.error("Erro ao buscar tipos de depósito:", error);
-    return NextResponse.json({ error: "Erro ao buscar tipos de depósito." });
+    return NextResponse.json("Erro ao buscar tipos de depósito.", {status: 500});
   } finally {
     await prisma.$disconnect();
   }
 }
-
-
-// export async function handler(
-//   req: NextApiRequest,
-//   res: NextApiResponse
-// ) {
-//   if (req.method === "GET") {
-//     try {
-//       const depositTypes = await prisma.depositType.findMany();
-
-//       res.status(200).json(depositTypes);
-//     } catch (error) {
-//       console.error("Erro ao buscar tipos de depósito:", error);
-//       res.status(500).json({ error: "Erro ao buscar tipos de depósito." });
-//     } finally {
-//       await prisma.$disconnect();
-//     }
-//   } else {
-//     res.status(405).json({ error: "Método HTTP não permitido." });
-//   }
-// }
