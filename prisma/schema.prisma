@@ -61,13 +61,13 @@ model User {
 model ValuesRegister {
   id              String       @id @default(auto()) @map("_id") @db.ObjectId
   createdAt       DateTime     @default(now())
-  entryValue      Float?
-  withdrawalValue Float?
-  totalValue      Float?
-  description     String?
+  updateAt        DateTime     @updatedAt
+  entryValue      Float
+  withdrawalValue Float
+  totalValue      Float
+  description     String
   depositType     DepositType? @relation(fields: [depositTypeId], references: [id])
   depositTypeId   String?      @db.ObjectId
-  authorId        String
   userId          String       @db.ObjectId
 
   user User @relation(fields: [userId], references: [id])
