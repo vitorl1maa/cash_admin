@@ -1,6 +1,9 @@
 import { db as prisma } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt"
+import { NextApiRequest, NextApiResponse } from "next";
+import { useId } from "react";
+import { getSession } from 'next-auth/react';
 
 export async function POST(req: NextRequest) {
 
@@ -32,10 +35,23 @@ export async function POST(req: NextRequest) {
       email,
       profession,
       hashedPassword
-
     }
   })
 
   return NextResponse.json(user)
   
 }
+
+
+// export async function GET() {
+//   try {
+//     const users = await prisma.user.findMany();
+//     return NextResponse.json(users, {status:200});
+//   } catch (error) {
+//     console.error("Erro ao buscar usuário:", error);
+//     return NextResponse.json("Erro ao buscar usuário:", {status: 500});
+//   } finally {
+//     await prisma.$disconnect();
+//   }
+// }
+

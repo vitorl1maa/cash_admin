@@ -25,6 +25,8 @@ interface DepositTypeProp {
 interface FormValue {
   value: string;
   description: string;
+  withdrawalValue: string;
+  totalValue: string;
 }
 
 interface Trasaction {
@@ -54,7 +56,11 @@ export default function FluxInputs({ onTotalValue }: FluxInputsProps) {
   const [inputValue, setInputValue] = useState<FormValue>({
     value: "",
     description: "",
+    withdrawalValue: "",
+    totalValue: "",
   });
+
+  const apiUrl = "/api/registerValues";
 
   useEffect(() => {
     const localStorageValue = localStorage.getItem("moneyValue");
@@ -106,10 +112,13 @@ export default function FluxInputs({ onTotalValue }: FluxInputsProps) {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
+  console.log(inputValue);
 
   const handleDepositTypeValue = (selectedValue: string) => {
     setSelectedDepositType(selectedValue);
   };
+
+  console.log(selectedDepositType);
 
   const handleAddValue = () => {
     const newValue = parseCurrency(inputValue.value);
@@ -130,6 +139,8 @@ export default function FluxInputs({ onTotalValue }: FluxInputsProps) {
       setInputValue({
         value: "0", // Inicialize com o valor desejado (0, por exemplo)
         description: "",
+        withdrawalValue: "",
+        totalValue: "",
       });
       localStorage.setItem("lastDeposit", newValue.toString());
       setLastDeposit(newValue);
@@ -179,17 +190,9 @@ export default function FluxInputs({ onTotalValue }: FluxInputsProps) {
     }
   };
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     setIsLoading(true);
-
-    const dataToSubmit = {
-      value: inputValue.value,
-      description: inputValue.description,
-      depositType: selectedDepositType,
-    };
-
-    console.log(dataToSubmit);
   };
 
   return (
@@ -233,7 +236,7 @@ export default function FluxInputs({ onTotalValue }: FluxInputsProps) {
                 <SelectGroup>
                   <SelectLabel>Selecione</SelectLabel>
                   {depositTypes.map((depositType) => (
-                    <SelectItem value={depositType.name} key={depositType.id}>
+                    <SelectItem value={depositType.id} key={depositType.id}>
                       {depositType.name}
                     </SelectItem>
                   ))}

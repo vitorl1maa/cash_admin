@@ -38,27 +38,28 @@ model Session {
 }
 
 model User {
-  id             String           @id @default(auto()) @map("_id") @db.ObjectId
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
   name           String?
   lastName       String?
-  email          String?          @unique
+  email          String?       @unique
   emailVerified  DateTime?
   profession     String?
   hashedPassword String?
   image          String?
+  totalValue     Float?
   avatar         String?
-  createdAt      DateTime         @default(now())
-  updateAt       DateTime         @updatedAt
+  createdAt      DateTime      @default(now())
+  updateAt       DateTime      @updatedAt
   accounts       Account[]
   session        Session[]
-  ValuesRegister ValuesRegister[]
-  DepositType    DepositType?     @relation(fields: [depositTypeId], references: [id])
-  depositTypeId  String?          @db.ObjectId
+  transactions   Transaction[]
+  DepositType    DepositType?  @relation(fields: [depositTypeId], references: [id])
+  depositTypeId  String?       @db.ObjectId
 
   @@map("users")
 }
 
-model ValuesRegister {
+model Transaction {
   id              String       @id @default(auto()) @map("_id") @db.ObjectId
   createdAt       DateTime     @default(now())
   updateAt        DateTime     @updatedAt
@@ -72,12 +73,12 @@ model ValuesRegister {
 
   user User @relation(fields: [userId], references: [id])
 
-  @@map("valuesRegisters")
+  @@map("transactions")
 }
 
 model DepositType {
-  id             String           @id @default(auto()) @map("_id") @db.ObjectId
-  name           String           @unique
-  users          User[]
-  ValuesRegister ValuesRegister[]
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  name         String        @unique
+  users        User[]
+  transactions Transaction[]
 }
