@@ -63,10 +63,10 @@ model Transaction {
   id              String       @id @default(auto()) @map("_id") @db.ObjectId
   createdAt       DateTime     @default(now())
   updateAt        DateTime     @updatedAt
-  entryValue      Float
-  withdrawalValue Float
-  totalValue      Float
-  description     String
+  entryValue      Float?
+  withdrawalValue Float?
+  totalValue      Float?
+  description     String?
   depositType     DepositType? @relation(fields: [depositTypeId], references: [id])
   depositTypeId   String?      @db.ObjectId
   userId          String       @db.ObjectId
