@@ -38,23 +38,28 @@ model Session {
 }
 
 model User {
-  id             String        @id @default(auto()) @map("_id") @db.ObjectId
-  name           String?
-  lastName       String?
-  email          String?       @unique
-  emailVerified  DateTime?
-  profession     String?
-  hashedPassword String?
-  image          String?
-  totalValue     Float?
-  avatar         String?
-  createdAt      DateTime      @default(now())
-  updateAt       DateTime      @updatedAt
-  accounts       Account[]
-  session        Session[]
-  transactions   Transaction[]
-  DepositType    DepositType?  @relation(fields: [depositTypeId], references: [id])
-  depositTypeId  String?       @db.ObjectId
+  id                  String        @id @default(auto()) @map("_id") @db.ObjectId
+  name                String?
+  lastName            String?
+  email               String?       @unique
+  emailVerified       DateTime?
+  profession          String?
+  hashedPassword      String?
+  image               String?
+  totalValue          Float?
+  avatar              String?
+  createdAt           DateTime      @default(now())
+  updateAt            DateTime      @updatedAt
+  accounts            Account[]
+  session             Session[]
+  primaryDeposit      Boolean?      @default(false)
+  entryValue          Float?
+  withdrawalValue     Float?
+  lastEntryValue      Float?
+  lastWithdrawalValue Float?
+  transactions        Transaction[]
+  DepositType         DepositType?  @relation(fields: [depositTypeId], references: [id])
+  depositTypeId       String?       @db.ObjectId
 
   @@map("users")
 }

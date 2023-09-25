@@ -6,9 +6,9 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { Bell, ExcludeSquare, SignOut } from "@phosphor-icons/react";
 import { Wallet } from "lucide-react";
-import FluxInputs from "./ControlValues";
 import { formatCurrency } from "@/utils/formated";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
+import ControlValues from "./ControlValues";
 
 interface UserData {
   name: string;
@@ -81,7 +81,7 @@ export default function Dashboard() {
               </span> */}
             </div>
           </nav>
-          <FluxInputs
+          <ControlValues
             onTotalValue={receiveTotalValue}
             userId={session.user.id}
           />
