@@ -27,8 +27,8 @@ interface DepositTypeProp {
 }
 
 interface Transaction {
-  entryValue: number | null;
-  withdrawalValue: number | null;
+  entryValue: any;
+  withdrawalValue: any;
   description: string;
   depositTypeId: string;
   userId: string;
@@ -36,6 +36,8 @@ interface Transaction {
 
 interface UserData {
   transactions: Transaction[];
+  entryValue: any;
+  withdrawalValue: any;
 }
 
 export default function ControlValues({ onTotalValue, userId }: ControlProps) {
@@ -47,7 +49,10 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [totalValue, setTotalValue] = useState(0);
+  const [entryValue, setEntryValue] = useState<any>();
+  const [withdrawalValue, setWithdrawalValue] = useState<any>();
   const { toast } = useToast();
+  const [checkboxLabel, setCheckboxLabel] = useState("Depositar");
   const [inputValues, setInputValues] = useState({
     value: "",
     description: "",
@@ -101,10 +106,13 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
         }
         const data = await res.json();
         setUserPrimaryDeposit(data.primaryDeposit || false);
+        setEntryValue(data.entryValue);
+        setWithdrawalValue(data.withdrawalValue);
 
         if (data.transactions) {
           const calculatedTotalValue = calculateTotalValue(data.transactions);
-          setTotalValue(calculatedTotalValue); // Defina o totalValue com base nas transações
+          setTotalValue(calculatedTotalValue);
+          onTotalValue(calculatedTotalValue);
         }
       } catch (error) {
         console.error("Erro ao buscar o usuário", error);
@@ -132,7 +140,16 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
     setIsDeposit(checked);
+    setCheckboxLabel(checked ? "Depositar" : "Sacar");
   };
+
+  useEffect(() => {
+    if (userData) {
+      const { entryValue, withdrawalValue } = userData;
+      setEntryValue(entryValue);
+      setWithdrawalValue(withdrawalValue);
+    }
+  }, [userData]);
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -195,21 +212,25 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
       setUserPrimaryDeposit(true);
 
       if (isDeposit) {
-        // Se for um depósito, adicione o valor ao totalValue
+        setEntryValue(entryValue);
         setTotalValue((prevTotal) => prevTotal + entryValue);
       } else {
-        // Se for um saque, subtraia o valor do totalValue
+        setWithdrawalValue(entryValue);
         setTotalValue((prevTotal) => prevTotal - entryValue);
       }
 
-      const updateData = {
+      const updateData: any = {
         primaryDeposit: true,
-        entryValue: isDeposit ? entryValue : null,
-        withdrawalValue: isDeposit ? null : entryValue,
       };
 
+      if (isDeposit) {
+        updateData.entryValue = entryValue;
+      } else {
+        updateData.withdrawalValue = entryValue;
+      }
+
       const updateRes = await fetch(`/api/users/${userId}`, {
-        method: "PUT",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
@@ -346,24 +367,26 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="flex items-center mt-5 gap-3">
+                  <div className="flex items-center mt-5 gap-3 bg-blue-600/30 px-3 py-3 rounded-md">
                     <input
                       id="deposit"
                       type="checkbox"
                       checked={isDeposit}
                       onChange={handleCheckboxChange}
-                      className="w-5 h-5 cursor-pointer"
+                      className="w-5 h-5 cursor-pointer bg-rose-800"
                     />
                     <label
                       htmlFor="deposit"
-                      className="text-md font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      className="text-lg font-extrabold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
-                      Depositar / Retirar
+                      {checkboxLabel}
                     </label>
                   </div>
                 </div>
                 <div className="flex items-end gap-2 py-5">
-                  <Button>Enviar</Button>
+                  <Button className="w-32 text-white bg-green-600 hover:bg-green-600/30 hover:translate-y-1 transition-all">
+                    Enviar
+                  </Button>
                 </div>
               </form>
               <div className="flex gap-3 pr-5 pt-5">
@@ -372,18 +395,22 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
                     <span className="bg-neutral-700 p-2 rounded-full">
                       <Coins size={25} weight="fill" color="#fff" />
                     </span>
-                    Entrada
+                    Último Depósito
                   </div>
-                  <p className="pl-12 font-extrabold"></p>
+                  <p className="pl-12 font-extrabold">
+                    {formatCurrency(entryValue)}
+                  </p>
                 </section>
-                <section className="bg-neutral-800 flex flex-col justify-center  px-4 py-5 rounded-md w-64">
+                <section className="bg-neutral-800 flex flex-col justify-center  px-4 py-7 rounded-md w-64">
                   <div className="flex items-center gap-2 font-extrabold text-neutral-500">
                     <span className="bg-neutral-700 p-2 rounded-full">
                       <HandCoins size={25} weight="fill" color="#fff" />
                     </span>
-                    Última saída
+                    Último Saque
                   </div>
-                  <p className="pl-12 font-extrabold"></p>
+                  <p className="pl-12 font-extrabold">
+                    - {formatCurrency(withdrawalValue)}
+                  </p>
                 </section>
                 <section className="bg-neutral-800 flex flex-col justify-center px-4 py-2 rounded-md w-64">
                   <div className="flex items-center gap-2 font-extrabold text-neutral-500">
@@ -399,6 +426,7 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
               </div>
             </section>
           )}
+          <div></div>
         </>
       )}
     </article>

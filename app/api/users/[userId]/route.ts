@@ -33,7 +33,7 @@ export async function GET(request: Request, context: { params: { userId: string 
   }
 }
 
-export async function PUT(request: Request, context: { params: { userId: string } }) {
+export async function PATCH(request: Request, context: { params: { userId: string } }) {
   try {
     // Recuperando o userId do contexto
     const userId = context.params.userId;
@@ -46,11 +46,7 @@ export async function PUT(request: Request, context: { params: { userId: string 
     // Atualize o usuário com os novos dados
     const updatedUser = await prisma.user.update({
       where: { id: userId },
-      data: {
-        primaryDeposit: updates.primaryDeposit,
-        entryValue: updates.entryValue, // Adicione esta linha para atualizar entryValue
-        withdrawalValue: updates.withdrawalValue, // Adicione esta linha para atualizar withdrawalValue
-      },
+      data: updates, // Isso atualizará apenas os campos presentes em "updates"
     });
 
     // Retorna o usuário atualizado como resposta
