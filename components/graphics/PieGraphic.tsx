@@ -67,7 +67,7 @@ export function PieGraphic({ userId }: PieProps) {
     });
   }, [userId]);
 
-  const pieOptions = {
+  const pieOptions: any = {
     labels: investmentLabels,
     colors: ["#85c3d1", "#da6559", "#4046d2"],
     series: investmentData,
