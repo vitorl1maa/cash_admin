@@ -82,7 +82,10 @@ export default function Dashboard() {
                       Olá {userData ? userData.name : ""}{" "}
                     </p>
                   </div>
-                  <Button onClick={() => signOut({ callbackUrl: "/" })}>
+                  <Button
+                    onClick={() => signOut({ callbackUrl: "/" })}
+                    className="bg-newBlue hover:bg-newBlue/30 hover:translate-y-1 transition-all text-white"
+                  >
                     <SignOut size={20} />
                     Sair
                   </Button>

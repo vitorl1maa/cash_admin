@@ -1,5 +1,7 @@
 "use client";
 
+import { Metadata } from "next";
+
 import { ExcludeSquare, Spinner } from "@phosphor-icons/react";
 import React, { useState } from "react";
 import { Input } from "./ui/input";
@@ -9,6 +11,12 @@ import { signIn } from "next-auth/react";
 import { useToast } from "./ui/use-toast";
 import { ToastAction } from "./ui/toast";
 import { useRouter } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "Autenticação",
+  description:
+    "Autenticação utilizando Shadcs-ui Next-Auth (Authjs), prisma e Nextjs 13.4+",
+};
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -114,6 +122,7 @@ export default function Login({ className, ...props }: UserAuthFormProps) {
               value={data.email}
               onChange={handleChange}
             />
+
             <Input
               id="password"
               type="password"
@@ -136,21 +145,31 @@ export default function Login({ className, ...props }: UserAuthFormProps) {
               Entrar
             </Button>
           </form>
+          <Button
+            className="w-full mt-5 bg-newBlue hover:bg-newBlue/30 hover:translate-y-1 transition-all text-white"
+            onClick={handleShowSection}
+          >
+            Criar conta
+          </Button>
+          <div className="relative py-5">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-2 text-muted-foreground">
+                Ou continue com
+              </span>
+            </div>
+          </div>
           <div>
             <Button
-              className="w-full mt-5 hover:translate-y-1 transition-all"
+              className="w-full  hover:translate-y-1 transition-all"
               onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
             >
               <img src="/google.svg" alt="" className="pr-3 w-9" />
               Entrar com o Google
             </Button>
           </div>
-          <Button
-            className="w-full mt-5 bg-green-600 hover:bg-green-600/30 hover:translate-y-1 transition-all text-white"
-            onClick={handleShowSection}
-          >
-            Criar conta
-          </Button>
         </div>
       </section>
     </div>
