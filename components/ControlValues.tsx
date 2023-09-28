@@ -17,6 +17,8 @@ import { IsLoading } from "./IsLoading";
 import { Checkbox } from "./ui/checkbox";
 import { AreaGraphic } from "./graphics/AreaGraphic";
 import { PieGraphic } from "./graphics/PieGraphic";
+import { CalendarDefault } from "./CalendarDefault";
+import { TableValues } from "./TableValues";
 
 interface ControlProps {
   onTotalValue: (value: number) => void;
@@ -266,187 +268,217 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
           <IsLoading />
         </div>
       ) : (
-        <main className="flex">
-          <article className="py-8 pl-8 flex flex-col w-3/5 h-full border-r">
-            <p className="font-extrabold">{formatDate(currentDate)}</p>
-            <>
-              {!userPrimaryDeposit && (
-                <section
-                  id="primary-deposit"
-                  className="w-full flex flex-col gap-3 mt-32 items-center"
-                >
-                  <section
-                    id="primary-deposit"
-                    className="w-full flex flex-col gap-3 mt-32 items-center"
-                  >
-                    <h1 className="text-2xl font-extrabold">
-                      Faça seu primeiro depósito
-                    </h1>
-                    <form
-                      className="flex flex-col gap-5"
-                      onSubmit={handleSubmit}
-                    >
-                      <Input
-                        placeholder="valor"
-                        name="value"
-                        value={inputValues.value}
-                        onChange={handleTakeValue}
-                      />
-                      <Input
-                        placeholder="descrição"
-                        name="description"
-                        value={inputValues.description}
-                        onChange={handleTakeValue}
-                      />
-                      <div className="flex gap-3 items-center">
-                        <Select onValueChange={handleSelectTake}>
-                          <SelectTrigger className="w-[180px] my-3">
-                            <SelectValue placeholder="Selecione" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectGroup>
-                              <SelectLabel>Selecione</SelectLabel>
-                              {depositTypes.map((depositType) => (
-                                <SelectItem
-                                  value={depositType.id}
-                                  key={depositType.id}
-                                >
-                                  {depositType.name}
-                                </SelectItem>
-                              ))}
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                        <Button className="w-32 bg-newBlue hover:bg-newBlue/30 hover:translate-y-1 transition-all">
-                          Enviar
-                        </Button>
-                      </div>
-                    </form>
-                  </section>
-                </section>
-              )}
-              {userPrimaryDeposit && (
+        <>
+          <main className="flex flex-col w-full">
+            <div className="flex w-full">
+              <article
+                className={`py-8 px-8 flex flex-col ${
+                  !userPrimaryDeposit ? "w-full" : "w-3/5 h-full border-r"
+                }`}
+              >
+                <p className="font-extrabold">{formatDate(currentDate)}</p>
                 <>
-                  <section id="control-values" className="">
-                    <form className="gap-3 pt-28" onSubmit={handleSubmit}>
-                      <div className="flex items-center gap-5 w-full">
-                        <div>
-                          <label htmlFor="" className="font-extrabold">
-                            Valor:
-                          </label>
+                  {!userPrimaryDeposit && (
+                    <section
+                      id="primary-deposit"
+                      className="w-full flex flex-col gap-3 mt-32 items-center"
+                    >
+                      <section
+                        id="primary-deposit"
+                        className="w-full flex flex-col gap-3 mt-32 items-center"
+                      >
+                        <h1 className="text-2xl font-extrabold">
+                          Faça seu primeiro depósito
+                        </h1>
+                        <form
+                          className="flex flex-col gap-5"
+                          onSubmit={handleSubmit}
+                        >
                           <Input
-                            name="value"
                             placeholder="valor"
-                            className="w-52 my-3"
+                            name="value"
                             value={inputValues.value}
                             onChange={handleTakeValue}
                           />
-                        </div>
-                        <div>
-                          <label htmlFor="" className="font-extrabold">
-                            Descrição:
-                          </label>
                           <Input
+                            placeholder="descrição"
                             name="description"
-                            placeholder="Descrição"
-                            className="w-52 my-3"
                             value={inputValues.description}
                             onChange={handleTakeValue}
                           />
-                        </div>
-                        <div>
-                          <label htmlFor="" className="font-extrabold">
-                            Categorias de despesas:
-                          </label>
-                          <Select onValueChange={handleSelectTake}>
-                            <SelectTrigger className="w-[200px] my-3">
-                              <SelectValue placeholder="Selecione" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectGroup>
-                                <SelectLabel>Selecione</SelectLabel>
-                                {depositTypes.map((depositType) => (
-                                  <SelectItem
-                                    value={depositType.id}
-                                    key={depositType.id}
-                                  >
-                                    {depositType.name}
-                                  </SelectItem>
-                                ))}
-                              </SelectGroup>
-                            </SelectContent>
-                          </Select>
-                        </div>
-                        <div className="flex items-center mt-5 gap-3 bg-newBlue/30 px-3 py-3 rounded-md">
-                          <input
-                            id="deposit"
-                            type="checkbox"
-                            checked={isDeposit}
-                            onChange={handleCheckboxChange}
-                            className="w-5 h-5 cursor-pointer"
-                          />
-                          <label
-                            htmlFor="deposit"
-                            className="text-lg font-extrabold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                          >
-                            {checkboxLabel}
-                          </label>
-                        </div>
-                      </div>
-                      <div className="flex items-end gap-2 py-5">
-                        <Button className="w-32 text-white bg-newBlue hover:bg-newBlue/30 hover:translate-y-1 transition-all">
-                          Enviar
-                        </Button>
-                      </div>
-                    </form>
-                    <div className="flex gap-3 pr-5 pt-5">
-                      <section className="bg-neutral-800 flex flex-col justify-center px-4 py-2 rounded-md w-64">
-                        <div className="flex items-center gap-2 font-extrabold text-neutral-500">
-                          <span className="bg-neutral-700 p-2 rounded-full">
-                            <Coins size={25} weight="fill" color="#fff" />
-                          </span>
-                          Último Depósito
-                        </div>
-                        <p className="pl-12 font-extrabold">
-                          {formatCurrency(entryValue)}
-                        </p>
+                          <div className="flex gap-3 items-center">
+                            <Select onValueChange={handleSelectTake}>
+                              <SelectTrigger className="w-[180px] my-3">
+                                <SelectValue placeholder="Selecione" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectGroup>
+                                  <SelectLabel>Selecione</SelectLabel>
+                                  {depositTypes.map((depositType) => (
+                                    <SelectItem
+                                      value={depositType.id}
+                                      key={depositType.id}
+                                    >
+                                      {depositType.name}
+                                    </SelectItem>
+                                  ))}
+                                </SelectGroup>
+                              </SelectContent>
+                            </Select>
+                            <Button className="w-32 text-white bg-newBlue hover:bg-newBlue/30 hover:translate-y-1 transition-all">
+                              Enviar
+                            </Button>
+                          </div>
+                        </form>
                       </section>
-                      <section className="bg-neutral-800 flex flex-col justify-center  px-4 py-7 rounded-md w-64">
-                        <div className="flex items-center gap-2 font-extrabold text-neutral-500">
-                          <span className="bg-neutral-700 p-2 rounded-full">
-                            <HandCoins size={25} weight="fill" color="#fff" />
-                          </span>
-                          Último Saque
+                    </section>
+                  )}
+                  {userPrimaryDeposit && (
+                    <>
+                      <section id="control-values" className="">
+                        <form className="gap-3 pt-28" onSubmit={handleSubmit}>
+                          <div className="flex items-center gap-5 w-full">
+                            <div>
+                              <label htmlFor="" className="font-extrabold">
+                                Valor:
+                              </label>
+                              <Input
+                                name="value"
+                                placeholder="valor"
+                                className="w-52 my-3"
+                                value={inputValues.value}
+                                onChange={handleTakeValue}
+                              />
+                            </div>
+                            <div>
+                              <label htmlFor="" className="font-extrabold">
+                                Descrição:
+                              </label>
+                              <Input
+                                name="description"
+                                placeholder="Descrição"
+                                className="w-52 my-3"
+                                value={inputValues.description}
+                                onChange={handleTakeValue}
+                              />
+                            </div>
+                            <div>
+                              <label htmlFor="" className="font-extrabold">
+                                Categorias de despesas:
+                              </label>
+                              <Select onValueChange={handleSelectTake}>
+                                <SelectTrigger className="w-[200px] my-3">
+                                  <SelectValue placeholder="Selecione" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectGroup>
+                                    <SelectLabel>Selecione</SelectLabel>
+                                    {depositTypes.map((depositType) => (
+                                      <SelectItem
+                                        value={depositType.id}
+                                        key={depositType.id}
+                                      >
+                                        {depositType.name}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectGroup>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                            <div className="flex items-center mt-5 gap-3 bg-newBlue/30 px-3 py-3 rounded-md">
+                              <input
+                                id="deposit"
+                                type="checkbox"
+                                checked={isDeposit}
+                                onChange={handleCheckboxChange}
+                                className="w-5 h-5 cursor-pointer"
+                              />
+                              <label
+                                htmlFor="deposit"
+                                className="text-lg font-extrabold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                {checkboxLabel}
+                              </label>
+                            </div>
+                          </div>
+                          <div className="flex items-end gap-2 py-5">
+                            <Button className="w-32 text-white bg-newBlue hover:bg-newBlue/30 hover:translate-y-1 transition-all">
+                              Enviar
+                            </Button>
+                          </div>
+                        </form>
+                        <div className="flex gap-3 pr-5 pt-5">
+                          <section className="bg-neutral-800 flex flex-col justify-center px-4 py-2 rounded-md w-64">
+                            <div className="flex items-center gap-2 font-extrabold text-neutral-500">
+                              <span className="bg-neutral-700 p-2 rounded-full">
+                                <Coins size={25} weight="fill" color="#fff" />
+                              </span>
+                              Último Depósito
+                            </div>
+                            <p className="pl-12 font-extrabold">
+                              {formatCurrency(entryValue)}
+                            </p>
+                          </section>
+                          <section className="bg-neutral-800 flex flex-col justify-center  px-4 py-7 rounded-md w-64">
+                            <div className="flex items-center gap-2 font-extrabold text-neutral-500">
+                              <span className="bg-neutral-700 p-2 rounded-full">
+                                <HandCoins
+                                  size={25}
+                                  weight="fill"
+                                  color="#fff"
+                                />
+                              </span>
+                              Último Saque
+                            </div>
+                            <p className="pl-12 font-extrabold">
+                              - {formatCurrency(withdrawalValue)}
+                            </p>
+                          </section>
+                          <section className="bg-neutral-800 flex flex-col justify-center px-4 py-2 rounded-md w-64">
+                            <div className="flex items-center gap-2 font-extrabold text-neutral-500">
+                              <span className="bg-neutral-700 p-2 rounded-full">
+                                <PiggyBank
+                                  size={25}
+                                  weight="fill"
+                                  color="#fff"
+                                />
+                              </span>
+                              Total
+                            </div>
+                            <p className="pl-12 font-extrabold">
+                              {formatCurrency(totalValue)}
+                            </p>
+                          </section>
                         </div>
-                        <p className="pl-12 font-extrabold">
-                          - {formatCurrency(withdrawalValue)}
-                        </p>
                       </section>
-                      <section className="bg-neutral-800 flex flex-col justify-center px-4 py-2 rounded-md w-64">
-                        <div className="flex items-center gap-2 font-extrabold text-neutral-500">
-                          <span className="bg-neutral-700 p-2 rounded-full">
-                            <PiggyBank size={25} weight="fill" color="#fff" />
-                          </span>
-                          Total
-                        </div>
-                        <p className="pl-12 font-extrabold">
-                          {formatCurrency(totalValue)}
-                        </p>
+                      <section className="pt-20">
+                        <AreaGraphic userId={userId} />
                       </section>
-                    </div>
-                  </section>
-                  <section className="pt-20">
-                    <AreaGraphic userId={userId} />
-                  </section>
+                    </>
+                  )}
                 </>
-              )}
-            </>
-          </article>
-          <article className="py-8 pl-8 flex flex-col">
-            <h3 className="pb-20  font-extrabold">Categoria de despesas</h3>
-            <PieGraphic userId={userId} />
-          </article>
-        </main>
+              </article>
+              <>
+                {userPrimaryDeposit ? (
+                  <article className="w-full py-8 pl-8">
+                    <h3 className="pb-20  font-extrabold">
+                      Categoria de despesas
+                    </h3>
+                    <section className="pt-8 px-8 flex flex-col items-center justify-center w-full ">
+                      <PieGraphic userId={userId} />
+                      <div className="w-10/12 mt-20">
+                        <CalendarDefault />
+                      </div>
+                    </section>
+                  </article>
+                ) : (
+                  <></>
+                )}
+              </>
+            </div>
+            <>{userPrimaryDeposit ? <TableValues userId={userId} /> : <></>}</>
+          </main>
+        </>
       )}
     </>
   );

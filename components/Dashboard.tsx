@@ -10,6 +10,7 @@ import { formatCurrency } from "@/utils/formated";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 import ControlValues from "./ControlValues";
 import { IsLoading } from "./IsLoading";
+import { TableValues } from "./TableValues";
 
 interface UserData {
   name: string;
@@ -50,7 +51,7 @@ export default function Dashboard() {
       ) : (
         <>
           {session && (
-            <main>
+            <main className="w-full">
               <nav className=" px-8 flex justify-between items-center lg:border-b py-5">
                 <div className="flex items-center">
                   <ExcludeSquare size={25} weight="fill" />

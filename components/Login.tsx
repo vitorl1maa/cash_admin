@@ -104,53 +104,55 @@ export default function Login({ className, ...props }: UserAuthFormProps) {
           </span>
           <h1 className="text-2xl pt-5 font-semibold">Seja Bem-vindo(a)!</h1>
         </div>
-        <div>
-          <form
-            action=""
-            className="flex flex-col gap-5 w-80"
-            onSubmit={handleSubmit}
-          >
-            <Input
-              id="email"
-              type="email"
-              placeholder="Email"
-              autoCapitalize="none"
-              autoComplete="email"
-              autoCorrect="off"
-              disabled={isLoading}
-              name="email"
-              value={data.email}
-              onChange={handleChange}
-            />
-
-            <Input
-              id="password"
-              type="password"
-              placeholder="Senha"
-              autoCapitalize="none"
-              autoComplete="password"
-              autoCorrect="off"
-              disabled={isLoading}
-              name="password"
-              value={data.password}
-              onChange={handleChange}
-            />
-            <Button
-              className="w-full mt-5 hover:translate-y-1 transition-all"
-              disabled={isLoading}
+        <div className="flex flex-col-reverse">
+          <div>
+            <form
+              action=""
+              className="flex flex-col gap-5 w-80"
+              onSubmit={handleSubmit}
             >
-              {isLoading && (
-                <Spinner className="mr-2 h-4 w-4 animate-spin" size={15} />
-              )}
-              Entrar
+              <Input
+                id="email"
+                type="email"
+                placeholder="Email"
+                autoCapitalize="none"
+                autoComplete="email"
+                autoCorrect="off"
+                disabled={isLoading}
+                name="email"
+                value={data.email}
+                onChange={handleChange}
+              />
+
+              <Input
+                id="password"
+                type="password"
+                placeholder="Senha"
+                autoCapitalize="none"
+                autoComplete="password"
+                autoCorrect="off"
+                disabled={isLoading}
+                name="password"
+                value={data.password}
+                onChange={handleChange}
+              />
+              <Button
+                className="w-full mt-5 hover:translate-y-1 transition-all"
+                disabled={isLoading}
+              >
+                {isLoading && (
+                  <Spinner className="mr-2 h-4 w-4 animate-spin" size={15} />
+                )}
+                Entrar
+              </Button>
+            </form>
+            <Button
+              className="w-full mt-5 bg-newBlue hover:bg-newBlue/30 hover:translate-y-1 transition-all text-white"
+              onClick={handleShowSection}
+            >
+              Criar conta
             </Button>
-          </form>
-          <Button
-            className="w-full mt-5 bg-newBlue hover:bg-newBlue/30 hover:translate-y-1 transition-all text-white"
-            onClick={handleShowSection}
-          >
-            Criar conta
-          </Button>
+          </div>
           <div className="relative py-5">
             <div className="absolute inset-0 flex items-center">
               <span className="w-full border-t" />

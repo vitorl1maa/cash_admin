@@ -23,7 +23,7 @@ export function formatCurrency(value: number): string {
 }
 
 export function parseCurrency(value: string): number {
-  const cleanedValue = value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+  const cleanedValue = value.replace(/\D/g, ''); 
   const parsedValue = parseFloat(cleanedValue)
   return isNaN(parsedValue) ? 0 : parsedValue;
 }
