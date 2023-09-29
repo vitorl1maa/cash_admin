@@ -40,7 +40,7 @@ export default function Dashboard() {
         });
     }
     setIsLoading(false);
-  }, [session]);
+  }, [session, setTotalValue]);
 
   return (
     <>

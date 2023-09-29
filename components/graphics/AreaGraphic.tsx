@@ -74,9 +74,10 @@ interface Transaction {
 
 interface GraphicProps {
   userId: string;
+  sharedData: null;
 }
 
-export function AreaGraphic({ userId }: GraphicProps) {
+export function AreaGraphic({ userId, sharedData }: GraphicProps) {
   const [depositData, setDepositData] = useState<Transaction[]>([]);
   const [withdrawalData, setWithdrawalData] = useState<Transaction[]>([]);
   const [chartSeries, setChartSeries] = useState<
@@ -131,7 +132,7 @@ export function AreaGraphic({ userId }: GraphicProps) {
         ]);
       }
     });
-  }, [userId]);
+  }, [userId, sharedData]);
 
   return (
     <>

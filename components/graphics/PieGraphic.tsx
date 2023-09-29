@@ -6,19 +6,19 @@ const Chart = dynamic(() => import("react-apexcharts"));
 
 interface PieProps {
   userId: string;
+  sharedData: null;
 }
 
 interface Transaction {
   depositTypeId: string;
 }
 
-export function PieGraphic({ userId }: PieProps) {
+export function PieGraphic({ userId, sharedData }: PieProps) {
   const [investmentLabels, setInvestmentLabels] = useState([
     "Essencial",
     "Não Essencial",
     "Investimentos",
   ]);
-
   const [investmentData, setInvestmentData] = useState<number[]>([0, 0, 0]);
 
   useEffect(() => {
@@ -65,7 +65,7 @@ export function PieGraphic({ userId }: PieProps) {
         setInvestmentData(investmentPercentages);
       }
     });
-  }, [userId]);
+  }, [userId, sharedData]);
 
   const pieOptions: any = {
     labels: investmentLabels,

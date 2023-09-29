@@ -26,6 +26,7 @@ import {
 
 interface TableProps {
   userId: string;
+  sharedData: null;
 }
 
 interface Transaction {
@@ -58,7 +59,7 @@ const typeStyles: Record<string, React.CSSProperties> = {
   },
 };
 
-export function TableValues({ userId }: TableProps) {
+export function TableValues({ userId, sharedData }: TableProps) {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [filter, setFilter] = useState<string>("");
 
@@ -127,7 +128,7 @@ export function TableValues({ userId }: TableProps) {
         setTransactions(sortedTransactions);
       }
     });
-  }, [userId]);
+  }, [userId, sharedData]);
 
   return (
     <div>
@@ -200,9 +201,6 @@ export function TableValues({ userId }: TableProps) {
               </TableCell>
               <TableCell className="text-center">
                 {transaction.description}
-              </TableCell>
-              <TableCell className="text-center cursor-pointer">
-                <Trash size={25} weight="fill" />
               </TableCell>
             </TableRow>
           ))}

@@ -65,6 +65,7 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
     null
   );
   const [isDeposit, setIsDeposit] = useState(true);
+  const [sharedData, setSharedData] = useState(null);
 
   const calculateTotalValue = (transactions: any[]) => {
     return transactions.reduce((acc, transaction) => {
@@ -217,10 +218,14 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
 
       if (isDeposit) {
         setEntryValue(entryValue);
+        const updatedTotalValue = totalValue + entryValue;
         setTotalValue((prevTotal) => prevTotal + entryValue);
+        onTotalValue(updatedTotalValue);
       } else {
         setWithdrawalValue(entryValue);
+        const updatedTotalValue = totalValue - entryValue;
         setTotalValue((prevTotal) => prevTotal - entryValue);
+        onTotalValue(updatedTotalValue);
       }
 
       const updateData: any = {
@@ -231,6 +236,13 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
         updateData.entryValue = entryValue;
       } else {
         updateData.withdrawalValue = entryValue;
+      }
+
+      if (res.ok) {
+        const newData = await res.json();
+
+        // Atualize o estado compartilhado com os novos dados
+        setSharedData(newData);
       }
 
       const updateRes = await fetch(`/api/users/${userId}`, {
@@ -452,7 +464,7 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
                         </div>
                       </section>
                       <section className="pt-20">
-                        <AreaGraphic userId={userId} />
+                        <AreaGraphic userId={userId} sharedData={sharedData} />
                       </section>
                     </>
                   )}
@@ -465,7 +477,7 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
                       Categoria de despesas
                     </h3>
                     <section className="pt-8 px-8 flex flex-col items-center justify-center w-full ">
-                      <PieGraphic userId={userId} />
+                      <PieGraphic userId={userId} sharedData={sharedData} />
                       <div className="w-10/12 mt-20">
                         <CalendarDefault />
                       </div>
@@ -476,7 +488,13 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
                 )}
               </>
             </div>
-            <>{userPrimaryDeposit ? <TableValues userId={userId} /> : <></>}</>
+            <>
+              {userPrimaryDeposit ? (
+                <TableValues userId={userId} sharedData={sharedData} />
+              ) : (
+                <></>
+              )}
+            </>
           </main>
         </>
       )}
