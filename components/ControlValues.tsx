@@ -282,10 +282,10 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
       ) : (
         <>
           <main className="flex flex-col w-full">
-            <div className="flex w-full">
+            <div className="flex w-full flex-col xl:flex-row">
               <article
                 className={`py-8 px-8 flex flex-col ${
-                  !userPrimaryDeposit ? "w-full" : "w-3/5 h-full border-r"
+                  !userPrimaryDeposit ? "w-full" : "xl:w-3/5 h-full xl:border-r"
                 }`}
               >
                 <p className="font-extrabold">{formatDate(currentDate)}</p>
@@ -349,7 +349,7 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
                     <>
                       <section id="control-values" className="">
                         <form className="gap-3 pt-28" onSubmit={handleSubmit}>
-                          <div className="flex items-center gap-5 w-full">
+                          <div className="flex items-center gap-5 flex-wrap xl:w-full xl:flex-nowrap">
                             <div>
                               <label htmlFor="" className="font-extrabold">
                                 Valor:
@@ -419,8 +419,8 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
                             </Button>
                           </div>
                         </form>
-                        <div className="flex gap-3 pr-5 pt-5">
-                          <section className="bg-neutral-800 flex flex-col justify-center px-4 py-2 rounded-md w-64">
+                        <div className="flex gap-3 pr-5 pt-5 flex-col xl:flex-row">
+                          <section className="bg-neutral-800 flex flex-col justify-center px-4 py-7 rounded-md w-full xl:w-64">
                             <div className="flex items-center gap-2 font-extrabold text-neutral-500">
                               <span className="bg-neutral-700 p-2 rounded-full">
                                 <Coins size={25} weight="fill" color="#fff" />
@@ -431,7 +431,7 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
                               {formatCurrency(entryValue)}
                             </p>
                           </section>
-                          <section className="bg-neutral-800 flex flex-col justify-center  px-4 py-7 rounded-md w-64">
+                          <section className="bg-neutral-800 flex flex-col justify-center  px-4 py-7 rounded-md w-full xl:w-64">
                             <div className="flex items-center gap-2 font-extrabold text-neutral-500">
                               <span className="bg-neutral-700 p-2 rounded-full">
                                 <HandCoins
@@ -446,7 +446,7 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
                               - {formatCurrency(withdrawalValue)}
                             </p>
                           </section>
-                          <section className="bg-neutral-800 flex flex-col justify-center px-4 py-2 rounded-md w-64">
+                          <section className="bg-neutral-800 flex flex-col justify-center px-4 py-7 rounded-md w-full xl:w-64">
                             <div className="flex items-center gap-2 font-extrabold text-neutral-500">
                               <span className="bg-neutral-700 p-2 rounded-full">
                                 <PiggyBank

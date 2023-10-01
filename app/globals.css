@@ -75,3 +75,46 @@
     @apply bg-background text-foreground;
   }
 }
+
+.nav-close-btn,
+.nav-open-btn {
+  display: none;
+}
+
+@media only screen and (max-width: 1024px) {
+  .menu {
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 720px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 7rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    gap: 2rem;
+    font-weight: bold;
+    background-color:#09090b;
+    transition: 0.5s;
+    transform: translateY(-500vh);
+    z-index: 1000;
+  }
+
+  .nav-close-btn,
+  .nav-open-btn {
+    display: block;
+  }
+
+  .nav-close-btn {
+    position: absolute;
+    top: 1.3rem;
+    right: 1.5rem;
+  }
+
+  .responsive_nav {
+    transform: none;
+  }
+}

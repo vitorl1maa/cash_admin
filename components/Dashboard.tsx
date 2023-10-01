@@ -1,16 +1,15 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { Bell, ExcludeSquare, SignOut } from "@phosphor-icons/react";
+import { Bell, ExcludeSquare, List, SignOut, X } from "@phosphor-icons/react";
 import { Wallet } from "lucide-react";
 import { formatCurrency } from "@/utils/formated";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 import ControlValues from "./ControlValues";
 import { IsLoading } from "./IsLoading";
-import { TableValues } from "./TableValues";
 
 interface UserData {
   name: string;
@@ -22,9 +21,16 @@ export default function Dashboard() {
   const [totalValue, setTotalValue] = useState<number>(0);
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const navRef = useRef<HTMLDivElement | null>(null);
 
   const receiveTotalValue = (value: number) => {
     setTotalValue(value);
+  };
+
+  const showNavbar = () => {
+    if (navRef.current) {
+      navRef.current.classList.toggle("responsive_nav");
+    }
   };
 
   useEffect(() => {
@@ -52,14 +58,17 @@ export default function Dashboard() {
         <>
           {session && (
             <main className="w-full">
-              <nav className=" px-8 flex justify-between items-center lg:border-b py-5">
+              <nav className=" px-8 flex justify-between items-center border-0 xl:border-b py-5 ">
                 <div className="flex items-center">
-                  <ExcludeSquare size={25} weight="fill" />
+                  <ExcludeSquare
+                    className="text-4xl lg:text-2xl"
+                    weight="fill"
+                  />
                   <h1 className="hidden lg:block font-extrabold text-xl">
                     Cash Admin
                   </h1>
                 </div>
-                <div className="flex items-center gap-5">
+                <div className="flex items-center gap-5 menu" ref={navRef}>
                   <span className="flex items-center font-extrabold gap-1 bg-neutral-800 px-5 py-2 rounded-full">
                     <Wallet size={20} />
                     {formatCurrency(totalValue)}
@@ -90,10 +99,17 @@ export default function Dashboard() {
                     <SignOut size={20} />
                     Sair
                   </Button>
-                  {/* <span className="bg-neutral-800 p-2 rounded-full">
-                <Bell size={25} />
-              </span> */}
+                  <X
+                    size={32}
+                    color="#ffff"
+                    onClick={showNavbar}
+                    className="cursor-pointer nav-close-btn"
+                  />
                 </div>
+                <List
+                  onClick={showNavbar}
+                  className="cursor-pointer nav-open-btn text-4xl lg:text-2xl"
+                />
               </nav>
               <ControlValues
                 onTotalValue={receiveTotalValue}
