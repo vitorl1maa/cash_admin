@@ -107,11 +107,6 @@ export function PieGraphic({ userId, sharedData }: PieProps) {
       fontWeight: 800,
       position: "bottom",
 
-      itemMargin: {
-        horizontal: 10,
-        vertical: 10,
-      },
-
       labels: {
         colors: ["#FFF", "#FFF", "#FFF"],
       },
@@ -119,10 +114,10 @@ export function PieGraphic({ userId, sharedData }: PieProps) {
 
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 425,
         options: {
           chart: {
-            width: 200,
+            width: 500,
           },
           legend: {
             position: "bottom",
@@ -139,7 +134,7 @@ export function PieGraphic({ userId, sharedData }: PieProps) {
         series={investmentData}
         type="donut"
         height={400}
-        width={450}
+        width={400}
       />
     </>
   );

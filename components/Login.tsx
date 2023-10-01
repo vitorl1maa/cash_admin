@@ -88,14 +88,14 @@ export default function Login({ className, ...props }: UserAuthFormProps) {
       <div
         className={`${
           showRegister ? "flex" : "hidden"
-        } lg:w-1/2 items-center justify-center px-5`}
+        } lg:w-1/2 items-center justify-center px-5 `}
       >
         {showRegister && <Register handleShowSection={handleShowSection} />}
       </div>
       <section
         className={`w-full ${
           showRegister ? "hidden" : "flex"
-        } lg:w-1/2 px-5 flex flex-col items-center justify-center`}
+        } lg:w-1/2 px-5  flex flex-col items-center justify-center`}
       >
         <h1 className="flex text-3xl font-extrabold lg:hidden">Cash Admin</h1>
         <div className="py-10 flex flex-col items-center justify-center">

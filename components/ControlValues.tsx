@@ -284,7 +284,7 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
           <main className="flex flex-col w-full">
             <div className="flex w-full flex-col xl:flex-row">
               <article
-                className={`py-8 px-8 flex flex-col ${
+                className={`py-8 px-5 xl:px-8 flex flex-col ${
                   !userPrimaryDeposit ? "w-full" : "xl:w-3/5 h-full xl:border-r"
                 }`}
               >
@@ -349,7 +349,7 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
                     <>
                       <section id="control-values" className="">
                         <form className="gap-3 pt-28" onSubmit={handleSubmit}>
-                          <div className="flex items-center gap-5 flex-wrap xl:w-full xl:flex-nowrap">
+                          <div className="flex items-center gap-5 flex-wrap xl:w-full xl:flex-nowrap ">
                             <div>
                               <label htmlFor="" className="font-extrabold">
                                 Valor:
@@ -357,7 +357,7 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
                               <Input
                                 name="value"
                                 placeholder="valor"
-                                className="w-52 my-3"
+                                className="w-80 xl:w-52 my-3"
                                 value={inputValues.value}
                                 onChange={handleTakeValue}
                               />
@@ -369,7 +369,7 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
                               <Input
                                 name="description"
                                 placeholder="Descrição"
-                                className="w-52 my-3"
+                                className="w-80 xl:w-52 my-3"
                                 value={inputValues.description}
                                 onChange={handleTakeValue}
                               />
@@ -379,7 +379,7 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
                                 Categorias de despesas:
                               </label>
                               <Select onValueChange={handleSelectTake}>
-                                <SelectTrigger className="w-[200px] my-3">
+                                <SelectTrigger className="w-[322px] xl:w-[200px] my-3">
                                   <SelectValue placeholder="Selecione" />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -397,7 +397,7 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
                                 </SelectContent>
                               </Select>
                             </div>
-                            <div className="flex items-center mt-5 gap-3 bg-newBlue/30 px-3 py-3 rounded-md">
+                            <div className="flex items-center xl:mt-5 gap-3 bg-newBlue/30 px-3 py-3 rounded-md">
                               <input
                                 id="deposit"
                                 type="checkbox"
@@ -419,7 +419,7 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
                             </Button>
                           </div>
                         </form>
-                        <div className="flex gap-3 pr-5 pt-5 flex-col xl:flex-row">
+                        <div className="flex gap-3 xl:pr-5 pt-5 flex-col xl:flex-row">
                           <section className="bg-neutral-800 flex flex-col justify-center px-4 py-7 rounded-md w-full xl:w-64">
                             <div className="flex items-center gap-2 font-extrabold text-neutral-500">
                               <span className="bg-neutral-700 p-2 rounded-full">
@@ -472,13 +472,13 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
               </article>
               <>
                 {userPrimaryDeposit ? (
-                  <article className="w-full py-8 pl-8">
+                  <article className="w-full py-8 px-5 xl:pl-8">
                     <h3 className="pb-20  font-extrabold">
                       Categoria de despesas
                     </h3>
-                    <section className="pt-8 px-8 flex flex-col items-center justify-center w-full ">
+                    <section className="pt-8  xl:px-8 flex flex-col items-center justify-center w-full ">
                       <PieGraphic userId={userId} sharedData={sharedData} />
-                      <div className="w-10/12 mt-20">
+                      <div className="xl:w-10/12 w-full mt-20">
                         <CalendarDefault />
                       </div>
                     </section>
