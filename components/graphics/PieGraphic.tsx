@@ -117,7 +117,7 @@ export function PieGraphic({ userId, sharedData }: PieProps) {
         breakpoint: 425,
         options: {
           chart: {
-            width: 500,
+            width: 300,
           },
           legend: {
             position: "bottom",
@@ -128,7 +128,7 @@ export function PieGraphic({ userId, sharedData }: PieProps) {
   };
 
   return (
-    <>
+    <div className="max-w-full ">
       <Chart
         options={pieOptions}
         series={investmentData}
@@ -136,6 +136,6 @@ export function PieGraphic({ userId, sharedData }: PieProps) {
         height={400}
         width={400}
       />
-    </>
+    </div>
   );
 }

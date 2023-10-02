@@ -478,7 +478,7 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
                     </h3>
                     <section className="pt-8  xl:px-8 flex flex-col items-center justify-center w-full ">
                       <PieGraphic userId={userId} sharedData={sharedData} />
-                      <div className="xl:w-10/12 w-full mt-20">
+                      <div className="xl:w-10/12 w-[300px] mt-20">
                         <CalendarDefault />
                       </div>
                     </section>

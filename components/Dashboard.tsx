@@ -58,7 +58,7 @@ export default function Dashboard() {
         <>
           {session && (
             <main className="w-full">
-              <nav className=" px-8 flex justify-between items-center border-0 xl:border-b py-5 ">
+              <nav className=" px-5 xl:px-8 flex justify-between items-center border-0 xl:border-b py-5 ">
                 <div className="flex items-center">
                   <ExcludeSquare
                     className="text-4xl lg:text-2xl"

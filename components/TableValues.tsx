@@ -137,7 +137,7 @@ export function TableValues({ userId, sharedData }: TableProps) {
           <TableRow>
             <TableHead className="w-[100px]">Data</TableHead>
             <TableHead className="text-center">Categoria</TableHead>
-            <TableHead className="text-center">Tipo</TableHead>
+            <TableHead className="text-center p-0">Tipo</TableHead>
             <TableHead className="text-center">Descrição</TableHead>
             <TableHead className="w-[100px] cursor-pointer">
               <form className="" onSubmit={handleSubmit}>
