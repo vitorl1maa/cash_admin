@@ -169,7 +169,7 @@ export default function ControlValues({ onTotalValue, userId }: ControlProps) {
         !selectedDepositType)
     ) {
       toast({
-        title: "❌ Preencha todos os campos para fazer o depósito",
+        title: "❌ Preencha todos os campos para fazer um depósito",
         variant: "destructive",
       });
       return;
