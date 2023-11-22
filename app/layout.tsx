@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Cash Admin",
-  description: "Administrar seu dinheiro nunca foi tão fácil e rápido",
+  description: "Administrar seu dinheiro nunca foi tão fácil",
 };
 
 export default function RootLayout({
